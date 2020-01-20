@@ -18,11 +18,13 @@ public class DbInit {
         final User user1 = User.builder()
                 .username("Water Sommelier of the Year")
                 .email("boss@watermail.com")
+                .password("aaa")
                 .build();
         userRepository.save(user1);
 
         final User user2 = User.builder()
                 .username("Kovács Béla")
+                .password("bbb")
                 .email("bela@watermail.com")
                 .build();
         userRepository.save(user2);
