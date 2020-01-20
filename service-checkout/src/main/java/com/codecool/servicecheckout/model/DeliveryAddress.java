@@ -28,5 +28,9 @@ public class DeliveryAddress {
 
     private String postalcode;
 
+    private Long userId;
+
+    private boolean active = false;
+
 
 }
