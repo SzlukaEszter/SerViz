@@ -8,11 +8,14 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface RatingRepository extends JpaRepository<Rating, Long> {
+public interface RatingRepository extends JpaRepository<Rating, Integer> {
 
-    List<Rating> findAllByWaterId(Long videoId);
+    List<Rating> findAllByWaterId(Integer waterId);
 
+    /*
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Rating r SET r.comment = :comment WHERE r.id = :ratingId")
     int updateComment(@Param("ratingId") Long ratingId, @Param("comment") String comment);
+
+     */
 }

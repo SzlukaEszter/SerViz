@@ -18,13 +18,12 @@ public class Rating {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Integer id;
 
     private String comment;
 
     private Integer rating;
 
-    private Long waterId;
-
+    private Integer waterId;
 
 }

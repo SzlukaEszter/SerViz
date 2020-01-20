@@ -20,13 +20,12 @@ public class RatingService {
         ratingRepository.save(rating);
     }
 
-    public List<Rating> getRatingForWater(Long waterId) {
+    public List<Rating> getRatingForWater(Integer waterId) {
         return ratingRepository.findAllByWaterId(waterId);
     }
 
     public void deleteRating(Rating rating) {
         ratingRepository.delete(rating);
-
 
     }
 }
