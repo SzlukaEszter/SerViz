@@ -1,6 +1,8 @@
 package com.codecool.serviceuser;
 
+import com.codecool.serviceuser.entity.User;
 import com.codecool.serviceuser.repository.UserRepository;
+import com.codecool.serviceuser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class ServiceUserApplication {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     public static void main(String[] args) {
         SpringApplication.run(ServiceUserApplication.class, args);
@@ -32,14 +34,6 @@ public class ServiceUserApplication {
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.ant("/user/**"))
                 .build();
-    }
-
-    @Bean
-    @Profile("production")
-    public CommandLineRunner init() {
-        return args -> {
-
-        };
     }
 
 }
