@@ -16,13 +16,13 @@ public class DbInit {
     @PostConstruct
     private void postConstruct() {
         final User user1 = User.builder()
-                .name("Water Sommelier of the Year")
+                .username("Water Sommelier of the Year")
                 .email("boss@watermail.com")
                 .build();
         userRepository.save(user1);
 
         final User user2 = User.builder()
-                .name("Kovács Béla")
+                .username("Kovács Béla")
                 .email("bela@watermail.com")
                 .build();
         userRepository.save(user2);
