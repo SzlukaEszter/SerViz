@@ -14,6 +14,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 
 @SpringBootApplication
@@ -40,6 +41,7 @@ public class ServiceWaterApplication {
     }
 
     @Bean
+    @PostConstruct
     public CommandLineRunner init() {
 
         return args -> {
