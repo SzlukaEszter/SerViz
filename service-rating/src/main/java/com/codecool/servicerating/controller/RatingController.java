@@ -36,4 +36,6 @@ public class RatingController {
     public void saveRating(@RequestBody Rating rating){
         ratingService.saveRating(rating);
     }
+
+
 }
