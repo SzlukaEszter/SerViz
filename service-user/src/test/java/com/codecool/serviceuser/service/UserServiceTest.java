@@ -60,4 +60,26 @@ class UserServiceTest {
         assertThat(user)
                .matches(u -> u.getEmail().equals("boss@watermail.com"));
     }
+
+    @Test
+    void getUserByName() {
+        final User user1 = User.builder()
+                .username("Water Sommelier of the Year")
+                .email("boss@watermail.com")
+                .password("aaa")
+                .build();
+        userService.saveUser(user1);
+
+        final User user2 = User.builder()
+                .username("Kovács Béla")
+                .email("bela@watermail.com")
+                .password("bbb")
+                .build();
+        userService.saveUser(user2);
+
+        User user = userService.getUserByUsername("Kovács Béla");
+
+        assertThat(user)
+                .matches(u -> u.getEmail().contentEquals("bela@watermail.com"));
+    }
 }

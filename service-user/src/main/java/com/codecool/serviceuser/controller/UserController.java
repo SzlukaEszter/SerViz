@@ -31,6 +31,11 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping("/byname")
+    public User getUserBy(@RequestParam("username") String username) {
+        return userService.getUserByUsername(username);
+    }
+
     @PostMapping("/")
     @ApiOperation("Update or create a user")
     public void saveUser(@RequestBody User user) {
