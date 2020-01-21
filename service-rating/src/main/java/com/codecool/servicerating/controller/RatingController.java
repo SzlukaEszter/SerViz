@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @Slf4j
 @RequestMapping("/rating")
@@ -17,7 +18,6 @@ public class RatingController {
     RatingService ratingService;
 
     @GetMapping("/{id}")
-    //public List<Rating> getAllRatingsForWater(@RequestParam("id") Integer waterId) {
     public List<Rating> getAllRatingsForWater(@PathVariable(value="id") Long waterId) {
         return ratingService.getRatingForWater(waterId);
     }
@@ -36,6 +36,4 @@ public class RatingController {
     public void saveRating(@RequestBody Rating rating){
         ratingService.saveRating(rating);
     }
-
-
 }
