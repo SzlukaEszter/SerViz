@@ -39,8 +39,8 @@ public class CheckoutService {
     }
 
 
-
-
-
-
+    public void setActive(Long id) {
+        deliveryAddressRepository.setActiveFalse();
+        deliveryAddressRepository.setAddressActive(id);
+    }
 }

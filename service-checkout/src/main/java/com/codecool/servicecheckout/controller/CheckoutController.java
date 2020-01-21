@@ -36,18 +36,23 @@ CartCaller cartCaller;
         return checkoutService.getAddressesOfUser(userId);
    }
 
-   @PostMapping("/addAddress")
+   @PostMapping("/add")
     public void addNewAddress(@RequestBody DeliveryAddress address) throws Exception {
         if (address.getId() != null) {throw new Exception("Address already egsist");}
         checkoutService.addDeliveryAddress(address);
    }
 
-   @PutMapping("/")
+   @PutMapping("/update")
     public void updateAddress(@RequestBody DeliveryAddress address) throws Exception {
         if (address.getId() == null) {
             throw new Exception("Id not found!");
         }
         checkoutService.addDeliveryAddress(address);
+   }
+
+   @PutMapping("/set-active")
+    public void setActive(@RequestParam("id") Long id){
+        checkoutService.setActive(id);
    }
 
 
