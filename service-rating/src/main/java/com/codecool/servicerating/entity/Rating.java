@@ -26,4 +26,6 @@ public class Rating {
 
     private Long waterId;
 
+    private Long userId;
+
 }

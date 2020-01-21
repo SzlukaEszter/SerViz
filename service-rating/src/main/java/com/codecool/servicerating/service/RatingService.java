@@ -19,7 +19,8 @@ public class RatingService {
         return ratingRepository.findAll();
     }
 
-    public void saveRating(Rating rating) {
+    public void saveRating(Rating rating, Long waterId) {
+        rating.setWaterId(waterId);
         ratingRepository.save(rating);
     }
 
@@ -27,7 +28,13 @@ public class RatingService {
         return ratingRepository.findAllByWaterId(waterId);
     }
 
-    public void deleteRating(Rating rating) {
-        ratingRepository.delete(rating);
+    public List<Rating> getRatingForUser(Long userId) {
+        return ratingRepository.findAllByUserId(userId);
     }
+
+    public void deleteRatingById(Long ratingId) {
+        ratingRepository.deleteById(ratingId);
+    }
+
+
 }
