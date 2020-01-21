@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/water")
+@RequestMapping("/rating")
 public class RatingController {
 
     @Autowired
@@ -18,16 +18,21 @@ public class RatingController {
 
     @GetMapping("/{id}")
     //public List<Rating> getAllRatingsForWater(@RequestParam("id") Integer waterId) {
-    public List<Rating> getAllRatingsForWater(@RequestParam("id") Integer waterId) {
+    public List<Rating> getAllRatingsForWater(@PathVariable(value="id") Long waterId) {
         return ratingService.getRatingForWater(waterId);
     }
 
-    @DeleteMapping("/delete")
+    @GetMapping("/all")
+    public List<Rating> getAllRating() {
+        return ratingService.getAllRating();
+    }
+
+    @DeleteMapping("/")
     public void deleteRating(@RequestBody Rating rating){
         ratingService.deleteRating(rating);
     }
 
-    @PostMapping("/save")
+    @PostMapping("/")
     public void saveRating(@RequestBody Rating rating){
         ratingService.saveRating(rating);
     }

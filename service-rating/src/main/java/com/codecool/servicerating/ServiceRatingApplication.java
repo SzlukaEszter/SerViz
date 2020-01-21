@@ -30,7 +30,6 @@ public class ServiceRatingApplication {
         SpringApplication.run(ServiceRatingApplication.class, args);
     }
 
-
     @Bean
     public Docket api() {
         return  new Docket(DocumentationType.SWAGGER_2)
@@ -47,28 +46,32 @@ public class ServiceRatingApplication {
 
             Rating rating1  = Rating.builder()
                     .comment("lol funny taste")
-                    .id(1)
                     .rating(5)
-                    .waterId(1)
+                    .waterId((long) 1)
                     .build();
 
             Rating rating2  = Rating.builder()
                     .comment("weird taste, yellow color")
-                    .id(2)
                     .rating(4)
-                    .waterId(2)
+                    .waterId((long) 2)
                     .build();
 
             Rating rating3  = Rating.builder()
                     .comment("it tastes like my granny, but still okay")
-                    .id(3)
                     .rating(5)
-                    .waterId( 3)
+                    .waterId((long) 3)
+                    .build();
+
+            Rating rating4  = Rating.builder()
+                    .comment("nothing better, than water that taste like old people")
+                    .rating(5)
+                    .waterId((long) 3)
                     .build();
 
             ratingRepository.save(rating1);
             ratingRepository.save(rating2);
             ratingRepository.save(rating3);
+            ratingRepository.save(rating4);
         };
     }
 }

@@ -8,9 +8,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface RatingRepository extends JpaRepository<Rating, Integer> {
+public interface RatingRepository extends JpaRepository<Rating, Long> {
 
-    List<Rating> findAllByWaterId(Integer waterId);
+    List<Rating> findAllByWaterId(Long waterId);
 
     /*
     @Modifying(clearAutomatically = true)
