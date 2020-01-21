@@ -17,11 +17,11 @@ public class CheckoutController {
 CheckoutService checkoutService;
 
     @GetMapping("/")
-    public Order getOrder(@RequestParam HashMap<String, String> req){
-        Long userId = Long.parseLong(req.get("userId"));
+    public Order getOrder(@RequestParam("userId") Long userId){
         DeliveryAddress deliveryAddress = checkoutService.getOrder(userId);
         // todo get Cart with restTemplate and build Order to return
         return Order.builder()
+                .deliveryAddress(deliveryAddress)
                 .userId(userId)
                 .build();
 
