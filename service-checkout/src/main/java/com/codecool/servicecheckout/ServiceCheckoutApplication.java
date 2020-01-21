@@ -1,5 +1,9 @@
 package com.codecool.servicecheckout;
 
+import com.codecool.servicecheckout.model.DeliveryAddress;
+import com.codecool.servicecheckout.repository.DeliveryAddressRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -11,9 +15,14 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Arrays;
+
 @SpringBootApplication
 @EnableSwagger2
 public class ServiceCheckoutApplication {
+
+@Autowired
+	DeliveryAddressRepository deliveryAddressRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceCheckoutApplication.class, args);
@@ -29,6 +38,33 @@ public class ServiceCheckoutApplication {
 				.build();
 	}
 
+	@Bean
+	public CommandLineRunner init() {
+		return args -> {
+			DeliveryAddress first = DeliveryAddress.builder()
+					.active(true)
+					.address("Nagymező u. 44.")
+					.city("Budapest")
+					.country("Hungary")
+					.postalcode("1056")
+					.userId(1L)
+					.build();
+
+			DeliveryAddress second = DeliveryAddress.builder()
+					.active(false)
+					.address("Béke u. 8.")
+					.city("Debrecen")
+					.country("Hungary")
+					.postalcode("4226")
+					.userId(1L)
+					.build();
+
+			System.out.println(first);
+			System.out.println(second);
+
+			deliveryAddressRepository.saveAll(Arrays.asList(first, second));
+		};
+	}
 	@Bean
 	@LoadBalanced
 	public RestTemplate restTemplate() {

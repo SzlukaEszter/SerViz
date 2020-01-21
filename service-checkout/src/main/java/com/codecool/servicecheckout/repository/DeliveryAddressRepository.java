@@ -4,4 +4,5 @@ import com.codecool.servicecheckout.model.DeliveryAddress;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DeliveryAddressRepository extends JpaRepository <DeliveryAddress, Long> {
+     DeliveryAddress findDeliveryAddressByUserIdAndActive(Long id, Boolean active);
 }

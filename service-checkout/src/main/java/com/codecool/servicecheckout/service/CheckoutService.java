@@ -13,8 +13,6 @@ public class CheckoutService {
     DeliveryAddressRepository deliveryAddressRepository;
 
     public DeliveryAddress getOrder(Long userId){
-        return deliveryAddressRepository.getOne(userId);
-
-
+        return deliveryAddressRepository.findDeliveryAddressByUserIdAndActive(userId, true);
     }
 }
