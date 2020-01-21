@@ -17,5 +17,5 @@ public class LineItem {
     private String name;
     private int quantity;
     private BigDecimal price;
-    private BigDecimal sumPrice;
+    private BigDecimal lineItemSumPrice;
 }

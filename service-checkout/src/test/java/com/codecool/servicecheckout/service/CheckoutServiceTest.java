@@ -24,33 +24,6 @@ void cleardb(){
     deliveryAddressRepository.deleteAll();
 }
 
-    @Test
-    void getOrder() {
-        DeliveryAddress first = DeliveryAddress.builder()
-                .active(true)
-                .address("Nagymező u. 44.")
-                .city("Budapest")
-                .country("Hungary")
-                .postalcode("1056")
-                .userId(1L)
-                .build();
-
-        DeliveryAddress second = DeliveryAddress.builder()
-                .active(false)
-                .address("Béke u. 8.")
-                .city("Debrecen")
-                .country("Hungary")
-                .postalcode("4226")
-                .userId(1L)
-                .build();
-
-        deliveryAddressRepository.saveAll(Arrays.asList(first, second));
-        DeliveryAddress address = checkoutService.getOrder(1L);
-        assertThat(address)
-                .matches(DeliveryAddress::isActive);
 
 
-
-
-    }
 }
