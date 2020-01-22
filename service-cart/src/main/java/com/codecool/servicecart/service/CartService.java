@@ -23,13 +23,13 @@ public class CartService {
     @Autowired
     CartRepository cartRepository;
 
-
     @Autowired
     WaterCaller waterCaller;
 
 
-    public List<LineItem> getAllLineItem() {
-        return lineItemRepository.findAll();
+    public List<LineItem> getAllLineItemByUserId(Long userId) {
+        Cart cart = cartRepository.findByUserId(userId);
+        return lineItemRepository.findAllByCart(cart);
     }
 
     public void deleteAllLineItemFromCart() {

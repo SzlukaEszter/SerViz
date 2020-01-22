@@ -4,6 +4,7 @@ package com.codecool.servicecart.controller;
 import com.codecool.servicecart.model.Cart;
 import com.codecool.servicecart.model.LineItem;
 import com.codecool.servicecart.service.CartService;
+import com.codecool.servicecart.service.UserIdentifierService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,13 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private UserIdentifierService userIdentifierService;
+
     @GetMapping("/")
     public List<LineItem> getAllLineItemInCart() {
-        return cartService.getAllLineItem();
+        Long userId = userIdentifierService.getUserId();
+        return cartService.getAllLineItemByUserId(userId);
     }
 
     @GetMapping("/getCart/{userId}")
