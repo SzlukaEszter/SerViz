@@ -24,7 +24,7 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Cart cart1 = Cart.builder()
-                .id(1L)
+                .userId(1L)
                 .lineItems(new ArrayList<LineItem>())
                 .sum(new BigDecimal(0))
                 .build();

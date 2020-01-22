@@ -11,8 +11,17 @@ import java.math.BigDecimal;
 @Data
 public class WaterData {
 
+    private Long waterId;
+
+    private String description;
+
     private String name;
 
     private BigDecimal price;
+
+    private String picture;
+
+    private int rating;
+
 
 }

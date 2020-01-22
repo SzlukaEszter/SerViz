@@ -3,7 +3,6 @@ package com.codecool.servicecart.controller;
 
 import com.codecool.servicecart.model.Cart;
 import com.codecool.servicecart.model.LineItem;
-import com.codecool.servicecart.model.WaterData;
 import com.codecool.servicecart.service.CartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,27 +19,27 @@ public class CartController {
     private CartService cartService;
 
     @GetMapping("/")
-    public List<LineItem> getAllLineItemInCart(){
+    public List<LineItem> getAllLineItemInCart() {
         return cartService.getAllLineItem();
     }
 
-    @GetMapping("/getCart")
-    public Cart getCart(@RequestParam Long userId){
+    @GetMapping("/getCart/{userId}")
+    public Cart getCart(@PathVariable Long userId) {
         return cartService.getCart(userId);
     }
 
-    @PostMapping("/add")
-    public void addToCart(@RequestBody WaterData water){
-        cartService.addToCart(water);
+    @PostMapping("/add/{waterId}")
+    public void addToCart(@PathVariable Long waterId) {
+        cartService.addToCart(waterId);
     }
 
     @DeleteMapping("/deleteAll")
-    public void emptyCart(){
+    public void emptyCart() {
         cartService.deleteAllLineItemFromCart();
     }
 
     @PostMapping("/increaseQuantity/{id}")
-    public void increaseQuantity(@PathVariable Long id){
+    public void increaseQuantity(@PathVariable Long id) {
         cartService.increaseQuantity(id);
     }
 
