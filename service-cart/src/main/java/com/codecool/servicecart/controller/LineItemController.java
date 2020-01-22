@@ -12,12 +12,12 @@ public class LineItemController {
     @Autowired
     private CartService cartService;
 
-    @PostMapping("/increaseQuantity/{lineItemId}")
+    @PutMapping("/increaseQuantity/{lineItemId}")
     public void increaseQuantity(@PathVariable Long lineItemId) {
         cartService.increaseQuantity(lineItemId);
     }
 
-    @PostMapping("/reduceQuantity/{lineItemId}")
+    @PutMapping("/reduceQuantity/{lineItemId}")
     public void reduceQuantity(@PathVariable Long lineItemId){
         cartService.reduceQuantity(lineItemId);
     }
