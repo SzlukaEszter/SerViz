@@ -13,4 +13,6 @@ public interface LineItemRepository extends JpaRepository<LineItem, Long> {
 
     List<LineItem> findAllByCart(Cart cart);
 
+    void deleteAllByCart(Cart cart);
+
 }

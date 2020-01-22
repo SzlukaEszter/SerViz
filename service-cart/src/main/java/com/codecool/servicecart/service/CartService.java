@@ -33,8 +33,10 @@ public class CartService {
         return lineItemRepository.findAllByCart(cart);
     }
 
-    public void deleteAllLineItemFromCart() {
-        lineItemRepository.deleteAll();
+    @Transactional
+    public void deleteAllLineItemFromCart(Long userId) {
+        Cart cart = getCart(userId);
+        lineItemRepository.deleteAllByCart(cart);
     }
 
     public Cart getCart(Long userId) {

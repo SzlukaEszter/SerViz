@@ -50,9 +50,11 @@ public class CartController {
         cartService.addToCart(waterId, userId);
     }
 
-    @DeleteMapping("/deleteAll")
+    @DeleteMapping("/emptyCart")
+    @ApiOperation("Remove all lineItems from cart for authenticated user (only from frontend, with valid token in cookie)")
     public void emptyCart() {
-        cartService.deleteAllLineItemFromCart();
+        Long userId = userIdentifierService.getUserId();
+        cartService.deleteAllLineItemFromCart(userId);
     }
 
 }
