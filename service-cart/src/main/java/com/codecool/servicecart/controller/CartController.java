@@ -28,9 +28,9 @@ public class CartController {
         return cartService.getCart(userId);
     }
 
-    @PostMapping("/add/{waterId}")
-    public void addToCart(@PathVariable Long waterId) {
-        cartService.addToCart(waterId);
+    @PostMapping("/add/{waterId}/{cartId}")
+    public void addToCart(@PathVariable("waterId") Long waterId, @PathVariable("cartId") Long cartId) {
+        cartService.addToCart(waterId, cartId);
     }
 
     @DeleteMapping("/deleteAll")

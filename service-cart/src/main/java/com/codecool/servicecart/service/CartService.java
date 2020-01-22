@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -70,14 +71,25 @@ public class CartService {
         lineItemRepository.delete(lineItem);
     }
 
-    public void addToCart(Long waterId) {
+    public void addToCart(Long waterId, Long cartId) {
+        Optional<Cart> actualCart = cartRepository.findById(cartId);
+        if (!actualCart.isPresent()) {
+            throw new RuntimeException("Cart not found");
+        }
+        Cart cart = actualCart.get();
         WaterData water = waterCaller.getWater(waterId);
-        LineItem lineItem = LineItem.builder()
-                .name(water.getName())
-                .price(water.getPrice())
-                .quantity(1)
-                .lineItemSumPrice(water.getPrice())
-                .build();
-        lineItemRepository.save(lineItem);
+
+        if (cart.getLineItems().stream().anyMatch(lineItem -> lineItem.getName().contentEquals(water.getName()))) {
+            throw new RuntimeException("This item already in your cart!");
+        } else {
+            LineItem lineItem = LineItem.builder()
+                    .name(water.getName())
+                    .price(water.getPrice())
+                    .quantity(1)
+                    .lineItemSumPrice(water.getPrice())
+                    .cart(cart)
+                    .build();
+            lineItemRepository.save(lineItem);
+        }
     }
 }
