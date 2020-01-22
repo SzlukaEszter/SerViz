@@ -38,14 +38,14 @@ CartCaller cartCaller;
 
    @PostMapping("/add")
     public void addNewAddress(@RequestBody DeliveryAddress address) throws Exception {
-        if (address.getId() != null) {throw new Exception("Address already egsist");}
+        if (address.getId() != null) {throw new IllegalArgumentException("Address already egsist");}
         checkoutService.addDeliveryAddress(address);
    }
 
    @PutMapping("/update")
-    public void updateAddress(@RequestBody DeliveryAddress address) throws Exception {
+    public void updateAddress(@RequestBody DeliveryAddress address) throws IllegalArgumentException {
         if (address.getId() == null) {
-            throw new Exception("Id not found!");
+            throw new IllegalArgumentException("Id not found!");
         }
         checkoutService.addDeliveryAddress(address);
    }
