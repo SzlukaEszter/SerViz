@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface RatingRepository extends JpaRepository<Rating, Long> {
 
-    List<Rating> findAllByWaterId(Long waterId);
+    Rating findAllByWaterId(Long waterId);
 
     /*
     @Modifying(clearAutomatically = true)

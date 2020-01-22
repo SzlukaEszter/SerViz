@@ -35,7 +35,7 @@ public class ServiceRatingApplication {
         return  new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/water/**"))
+                .paths(PathSelectors.ant("/rating/**"))
                 .build();
     }
 

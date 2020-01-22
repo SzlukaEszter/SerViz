@@ -23,7 +23,7 @@ public class RatingService {
         ratingRepository.save(rating);
     }
 
-    public List<Rating> getRatingForWater(Long waterId) {
+    public Rating getRatingForWater(Long waterId) {
         return ratingRepository.findAllByWaterId(waterId);
     }
 
