@@ -43,9 +43,11 @@ public class CartController {
         return cartService.getCart(userId);
     }
 
-    @PostMapping("/add/{waterId}/{cartId}")
-    public void addToCart(@PathVariable("waterId") Long waterId, @PathVariable("cartId") Long cartId) {
-        cartService.addToCart(waterId, cartId);
+    @PostMapping("/add/{waterId}")
+    @ApiOperation("Add water to cart for authenticated user (only from frontend, with valid token in cookie)")
+    public void addToCart(@PathVariable("waterId") Long waterId) {
+        Long userId = userIdentifierService.getUserId();
+        cartService.addToCart(waterId, userId);
     }
 
     @DeleteMapping("/deleteAll")

@@ -29,7 +29,7 @@ public class CartService {
 
 
     public List<LineItem> getAllLineItemByUserId(Long userId) {
-        Cart cart = cartRepository.findByUserId(userId);
+        Cart cart = getCart(userId);
         return lineItemRepository.findAllByCart(cart);
     }
 
@@ -38,7 +38,11 @@ public class CartService {
     }
 
     public Cart getCart(Long userId) {
-        return cartRepository.findByUserId(userId);
+        Optional<Cart> actualCart = cartRepository.findByUserId(userId);
+        if (!actualCart.isPresent()) {
+            throw new RuntimeException("Cart not found");
+        }
+        return actualCart.get();
     }
 
     public int calculateSumOfLineItems(LineItem lineItem) {
@@ -78,12 +82,8 @@ public class CartService {
         lineItemRepository.delete(lineItem);
     }
 
-    public void addToCart(Long waterId, Long cartId) {
-        Optional<Cart> actualCart = cartRepository.findById(cartId);
-        if (!actualCart.isPresent()) {
-            throw new RuntimeException("Cart not found");
-        }
-        Cart cart = actualCart.get();
+    public void addToCart(Long waterId, Long userId) {
+        Cart cart = getCart(userId);
         WaterData water = waterCaller.getWater(waterId);
 
         if (cart.getLineItems().stream().anyMatch(lineItem -> lineItem.getName().contentEquals(water.getName()))) {
