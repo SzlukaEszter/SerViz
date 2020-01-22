@@ -67,6 +67,10 @@ public class CartService {
         LineItem lineItem = lineItemRepository.findById(lineItemId).get();
         lineItem.setQuantity(lineItem.getQuantity() - 1);
         calculateSumOfLineItems(lineItem);
+        // check if quantity = 0 -> delete lineItem
+        if (lineItem.getQuantity() == 0) {
+            lineItemRepository.delete(lineItem);
+        }
     }
 
     public void deleteLineItem(Long lineItemId) {
