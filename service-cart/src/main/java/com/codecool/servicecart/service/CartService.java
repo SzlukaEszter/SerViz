@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,12 +55,14 @@ public class CartService {
         return total;
     }
 
+    @Transactional
     public void increaseQuantity(Long lineItemId) {
         LineItem lineItem = lineItemRepository.findById(lineItemId).get();
         lineItem.setQuantity(lineItem.getQuantity() + 1);
         calculateSumOfLineItems(lineItem);
     }
 
+    @Transactional
     public void reduceQuantity(Long lineItemId) {
         LineItem lineItem = lineItemRepository.findById(lineItemId).get();
         lineItem.setQuantity(lineItem.getQuantity() - 1);

@@ -43,18 +43,4 @@ public class CartController {
         cartService.deleteAllLineItemFromCart();
     }
 
-    @PostMapping("/increaseQuantity/{lineItemId}")
-    public void increaseQuantity(@PathVariable Long lineItemId) {
-        cartService.increaseQuantity(lineItemId);
-    }
-
-    @PostMapping("/reduceQuantity/{lineItemId}")
-    public void reduceQuantity(@PathVariable Long lineItemId){
-        cartService.reduceQuantity(lineItemId);
-    }
-
-    @DeleteMapping("/{lineItemId}")
-    public void deleteItem(@PathVariable("lineItemId") Long id){
-        cartService.deleteLineItem(id);
-    }
 }
