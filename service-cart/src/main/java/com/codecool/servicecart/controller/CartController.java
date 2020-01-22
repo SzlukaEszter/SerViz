@@ -57,4 +57,10 @@ public class CartController {
         cartService.deleteAllLineItemFromCart(userId);
     }
 
+    @DeleteMapping("/emptyCart/{userId}")
+    @ApiOperation("Remove all lineItems from cart by userId (call only from service, not frontend)")
+    public void emptyCart(@PathVariable Long userId) {
+        cartService.deleteAllLineItemFromCart(userId);
+    }
+
 }
