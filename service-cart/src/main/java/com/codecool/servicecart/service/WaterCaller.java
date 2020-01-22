@@ -15,7 +15,7 @@ public class WaterCaller {
     RestTemplate restTemplate;
 
     public WaterData getWater(Long waterId) {
-        WaterData waterData = restTemplate.getForObject("http://service-water/water/" + waterId, WaterData.class);
+        WaterData waterData = restTemplate.getForObject("http://service-water/water/water/" + waterId, WaterData.class);
         return waterData;
     }
 }
