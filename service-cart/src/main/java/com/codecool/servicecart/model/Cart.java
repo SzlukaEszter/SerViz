@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,10 +20,18 @@ public class Cart {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "cart")
-    private List<LineItem> lineItems;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cart", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<LineItem> lineItems = new ArrayList<LineItem>();
 
-    Long sum;
+    @Transient
+    private Long sum = 0L;
 
-    Long userId;
+    private Long userId;
+
+    public Long getSum() {
+        return getLineItems().stream()
+                .mapToLong(LineItem::getLineItemSumPrice)
+                .sum();
+    }
 }
