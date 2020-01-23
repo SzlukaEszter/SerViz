@@ -101,4 +101,9 @@ public class CartService {
             lineItemRepository.save(lineItem);
         }
     }
+
+    public void createCart(Long userId) {
+        Cart cart = Cart.builder().userId(userId).build();
+        cartRepository.save(cart);
+    }
 }

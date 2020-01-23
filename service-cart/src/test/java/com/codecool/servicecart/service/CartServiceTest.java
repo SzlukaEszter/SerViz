@@ -135,5 +135,14 @@ class CartServiceTest {
                 .hasSize(2);
     }
 
+    @Test
+    void createCart() {
+        cartService.createCart(3L);
+
+        final Cart cart = cartService.getCart(3L);
+
+        assertThat(cart).isNotNull();
+    }
+
 
 }
