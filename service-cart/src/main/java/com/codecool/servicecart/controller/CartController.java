@@ -30,6 +30,7 @@ public class CartController {
         return cartService.getAllLineItemByUserId(userId);
     }
 
+
     @GetMapping("/getCart/{userId}")
     @ApiOperation("Get cart by userId (call only from service, not frontend)")
     public Cart getCart(@PathVariable Long userId) {
@@ -43,12 +44,20 @@ public class CartController {
         return cartService.getCart(userId);
     }
 
+
     @PostMapping("/add/{waterId}")
     @ApiOperation("Add water to cart for authenticated user (only from frontend, with valid token in cookie)")
     public void addToCart(@PathVariable("waterId") Long waterId) {
         Long userId = userIdentifierService.getUserId();
         cartService.addToCart(waterId, userId);
     }
+
+    @PostMapping("/add/{waterId}/{userId}")
+    @ApiOperation("Add water to cart by userId (call only from service, not frontend)")
+    public void addToCart(@PathVariable("waterId") Long waterId, @PathVariable Long userId) {
+        cartService.addToCart(waterId, userId);
+    }
+
 
     @DeleteMapping("/emptyCart")
     @ApiOperation("Remove all lineItems from cart for authenticated user (only from frontend, with valid token in cookie)")
