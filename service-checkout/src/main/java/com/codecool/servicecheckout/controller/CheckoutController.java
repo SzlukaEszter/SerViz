@@ -31,18 +31,18 @@ CartCaller cartCaller;
         return cartCaller.callMarton();
     }
 
-   @PostMapping("/getAllDeliveryAddress")
-    public List<DeliveryAddress> getAllAddressesOfUser(@RequestParam("userId") Long userId){
+   @GetMapping("/{userId}/address")
+    public List<DeliveryAddress> getAllAddressesOfUser(@PathVariable("userId") Long userId){
         return checkoutService.getAddressesOfUser(userId);
    }
 
-   @PostMapping("/add")
-    public void addNewAddress(@RequestBody DeliveryAddress address) throws Exception {
-        if (address.getId() != null) {throw new IllegalArgumentException("Address already egsist");}
+   @PostMapping("/")
+    public void addNewAddress(@RequestBody DeliveryAddress address) throws IllegalArgumentException {
+        if (address.getId() != null) {throw new IllegalArgumentException("Address already exists");}
         checkoutService.addDeliveryAddress(address);
    }
 
-   @PutMapping("/update")
+   @PutMapping("/")
     public void updateAddress(@RequestBody DeliveryAddress address) throws IllegalArgumentException {
         if (address.getId() == null) {
             throw new IllegalArgumentException("Id not found!");
@@ -55,6 +55,9 @@ CartCaller cartCaller;
         checkoutService.setActive(id);
    }
 
+
+   @PostMapping("/{userId}/close")
+    public void closeOrder(@PathVariable Long userId) {checkoutService.sendEmail();}
 
 
 }

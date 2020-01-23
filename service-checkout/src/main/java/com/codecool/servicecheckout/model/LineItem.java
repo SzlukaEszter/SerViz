@@ -16,6 +16,6 @@ public class LineItem {
     private Long id;
     private String name;
     private int quantity;
-    private BigDecimal price;
-    private BigDecimal lineItemSumPrice;
+    private Long price;
+    private Long lineItemSumPrice;
 }

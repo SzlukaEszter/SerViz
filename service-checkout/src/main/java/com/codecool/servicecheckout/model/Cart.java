@@ -14,9 +14,10 @@ import java.util.List;
 @Builder
 public class Cart {
 
-    private Long cartId;
+    private Long id;
     private List<LineItem> lineItems;
-    private BigDecimal sum;
+    private Long sum;
+    private Long userId;
 
 
 }

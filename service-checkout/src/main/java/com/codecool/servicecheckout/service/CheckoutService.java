@@ -4,8 +4,10 @@ import com.codecool.servicecheckout.model.DeliveryAddress;
 import com.codecool.servicecheckout.model.Order;
 import com.codecool.servicecheckout.repository.DeliveryAddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,16 +33,27 @@ public class CheckoutService {
     }
 
     public List<DeliveryAddress> getAddressesOfUser(Long userId){
-        return deliveryAddressRepository.findAllById(Arrays.asList(userId));
+        return deliveryAddressRepository.findAllByUserId(userId);
     }
 
     public void addDeliveryAddress(DeliveryAddress address) {
         deliveryAddressRepository.save(address);
     }
 
-
+    @Transactional
     public void setActive(Long id) {
         deliveryAddressRepository.setActiveFalse();
         deliveryAddressRepository.setAddressActive(id);
+    }
+
+    @Autowired
+    SimpleMailMessage template;
+
+    @Autowired
+    EmailService emailService;
+
+    public void sendEmail() {
+        String text = String.format(template.getText(), "Hello");
+        emailService.sendSimpleMessage("szluka.eszter@gmail.com", "Thanks for your order!", text);
     }
 }

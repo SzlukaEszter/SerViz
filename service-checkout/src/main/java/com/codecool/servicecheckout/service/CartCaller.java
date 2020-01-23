@@ -30,11 +30,11 @@ public class CartCaller {
     }
 
     public Cart getCart(Long userId) {
-        ResponseEntity<Cart> response =
-                restTemplate.getForEntity(
-                        cartUrl + "/getCart?userId=" + userId,
+        Cart response =
+                restTemplate.getForObject(
+                        cartUrl + "/getCart/"+ userId,
                         Cart.class);
-        return response.getBody();
+        return response;
 
 
     }

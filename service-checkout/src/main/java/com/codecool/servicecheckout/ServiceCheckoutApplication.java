@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.client.RestTemplate;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -47,11 +48,11 @@ public class ServiceCheckoutApplication {
 					.city("Budapest")
 					.country("Hungary")
 					.postalcode("1056")
-					.userId(1L)
+					.userId(2L)
 					.build();
 
 			DeliveryAddress second = DeliveryAddress.builder()
-					.active(false)
+					.active(true)
 					.address("Béke u. 8.")
 					.city("Debrecen")
 					.country("Hungary")
@@ -59,16 +60,34 @@ public class ServiceCheckoutApplication {
 					.userId(1L)
 					.build();
 
+			DeliveryAddress third = DeliveryAddress.builder()
+					.active(false)
+					.address("Bálna u. 8.")
+					.city("Nyíregyháza")
+					.country("Hungary")
+					.postalcode("3326")
+					.userId(1L)
+					.build();
+
 			System.out.println(first);
 			System.out.println(second);
 
-			deliveryAddressRepository.saveAll(Arrays.asList(first, second));
+			deliveryAddressRepository.saveAll(Arrays.asList(first, second, third));
 		};
 	}
+
 	@Bean
 	@LoadBalanced
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
+	}
+
+	@Bean
+	public SimpleMailMessage templateSimpleMessage() {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setText(
+				"This is the test email template for your email:\n%s\n");
+		return message;
 	}
 
 }
