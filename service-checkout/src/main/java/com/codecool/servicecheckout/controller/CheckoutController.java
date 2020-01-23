@@ -57,7 +57,7 @@ CartCaller cartCaller;
 
 
    @PostMapping("/{userId}/close")
-    public void closeOrder(@PathVariable Long userId) {checkoutService.sendEmail();}
+    public void closeOrder(@PathVariable Long userId) {checkoutService.sendEmail(userId);}
 
 
 }

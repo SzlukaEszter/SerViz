@@ -2,6 +2,7 @@ package com.codecool.servicecheckout.service;
 
 import com.codecool.servicecheckout.model.DeliveryAddress;
 import com.codecool.servicecheckout.model.Order;
+import com.codecool.servicecheckout.model.User;
 import com.codecool.servicecheckout.repository.DeliveryAddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,6 +21,14 @@ public class CheckoutService {
     @Autowired
     CartCaller cartCaller;
 
+    @Autowired
+    SimpleMailMessage template;
+
+    @Autowired
+    EmailService emailService;
+
+    @Autowired
+    UserCaller userCaller;
 
     public Order getOrder(Long userId){
 
@@ -46,14 +55,13 @@ public class CheckoutService {
         deliveryAddressRepository.setAddressActive(id);
     }
 
-    @Autowired
-    SimpleMailMessage template;
 
-    @Autowired
-    EmailService emailService;
+    public void sendEmail(Long userId) {
+        Order order = getOrder(userId);
+        User user = userCaller.getUser(userId);
+        String text = String.format(template.getText(), user.getUsername(), order.toString());
+        String to = user.getEmail();
 
-    public void sendEmail() {
-        String text = String.format(template.getText(), "Hello");
-        emailService.sendSimpleMessage("szluka.eszter@gmail.com", "Thanks for your order!", text);
+        emailService.sendSimpleMessage("szluka.eszter@gmail.com", template.getSubject(), text);
     }
 }

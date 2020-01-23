@@ -18,4 +18,8 @@ public class LineItem {
     private int quantity;
     private Long price;
     private Long lineItemSumPrice;
+
+    public String toString(){
+        return name + " " + quantity + " pieces " + price + " HUF/pcs Sum: " + lineItemSumPrice;
+    }
 }

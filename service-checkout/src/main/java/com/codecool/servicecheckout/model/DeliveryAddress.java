@@ -32,5 +32,11 @@ public class DeliveryAddress {
 
     private boolean active = false;
 
+    public String toString(){
+        return country + "\n "
+                +postalcode + " " + city + "\n"
+                +address;
+    }
+
 
 }
