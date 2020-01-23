@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserIdentifierService {
 
-    public Long getUserId() {
+    public Long getserId() {
         // TODO: call service-user with token in request to get user id
         return 1L;
     }
