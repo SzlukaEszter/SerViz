@@ -1,13 +1,11 @@
 package com.codecool.serviceuser.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -25,4 +23,8 @@ public class User {
 
     private String email;
 
+    // roles of the user (ROLE_ADMIN, ROLE_USER)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
 }

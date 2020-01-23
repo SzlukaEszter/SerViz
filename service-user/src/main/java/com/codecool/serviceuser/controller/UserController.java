@@ -36,7 +36,7 @@ public class UserController {
         return userService.getUserByUsername(username);
     }
 
-    @PostMapping("/")
+    @PostMapping("/registration")
     @ApiOperation("Update or create a user")
     public void saveUser(@RequestBody User user) {
         userService.saveUser(user);

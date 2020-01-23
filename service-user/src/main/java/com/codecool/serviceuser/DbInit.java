@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 
 @Component
 public class DbInit {
@@ -19,6 +20,7 @@ public class DbInit {
                 .username("Water Sommelier of the Year")
                 .email("szluka.eszter@gmail.com")
                 .password("aaa")
+                .roles(Arrays.asList("ROLE_USER"))
                 .build();
         userRepository.save(user1);
 
@@ -26,6 +28,7 @@ public class DbInit {
                 .username("Kovács Béla")
                 .password("bbb")
                 .email("bela@watermail.com")
+                .roles(Arrays.asList("ROLE_USER"))
                 .build();
         userRepository.save(user2);
 
@@ -33,6 +36,7 @@ public class DbInit {
                 .username("a")
                 .password("a")
                 .email("a@a")
+                .roles(Arrays.asList("ROLE_USER", "ROLE_ADMIN"))
                 .build();
         userRepository.save(user3);
     }
