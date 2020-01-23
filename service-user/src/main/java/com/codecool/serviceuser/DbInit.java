@@ -17,7 +17,7 @@ public class DbInit {
     private void postConstruct() {
         final User user1 = User.builder()
                 .username("Water Sommelier of the Year")
-                .email("boss@watermail.com")
+                .email("szluka.eszter@gmail.com")
                 .password("aaa")
                 .build();
         userRepository.save(user1);
