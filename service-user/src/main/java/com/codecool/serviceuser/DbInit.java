@@ -17,7 +17,7 @@ public class DbInit {
     @PostConstruct
     private void postConstruct() {
         final User user1 = User.builder()
-                .username("Water Sommelier of the Year")
+                .username("WaterSommelierOfTheYear")
                 .email("szluka.eszter@gmail.com")
                 .password("aaa")
                 .roles(Arrays.asList("ROLE_USER"))
@@ -25,12 +25,20 @@ public class DbInit {
         userRepository.save(user1);
 
         final User user2 = User.builder()
-                .username("Kovács Béla")
+                .username("kristofpanna")
                 .password("bbb")
-                .email("bela@watermail.com")
+                .email("kristofpanna@gmail.com")
                 .roles(Arrays.asList("ROLE_USER"))
                 .build();
         userRepository.save(user2);
+
+        final User user4 = User.builder()
+                .username("user")
+                .password("u")
+                .email("user@watermail.com")
+                .roles(Arrays.asList("ROLE_USER"))
+                .build();
+        userRepository.save(user4);
 
         final User user3 = User.builder()
                 .username("a")
