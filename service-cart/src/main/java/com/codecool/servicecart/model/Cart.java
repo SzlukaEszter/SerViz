@@ -23,7 +23,7 @@ public class Cart {
     @OneToMany(mappedBy = "cart")
     private List<LineItem> lineItems;
 
-    BigDecimal sum;
+    Long sum;
 
     Long userId;
 }

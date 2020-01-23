@@ -19,7 +19,7 @@ public class WaterData {
 
     private String name;
 
-    private BigDecimal price;
+    private Long price;
 
     private String picture;
 

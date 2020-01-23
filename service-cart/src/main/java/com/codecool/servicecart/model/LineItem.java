@@ -27,9 +27,9 @@ public class LineItem {
 
     private int quantity;
 
-    private BigDecimal price;
+    private Long price;
 
-    private BigDecimal lineItemSumPrice;
+    private Long lineItemSumPrice;
 
     @ManyToOne
     @JsonIgnore

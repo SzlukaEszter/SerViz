@@ -47,14 +47,14 @@ public class CartService {
         return actualCart.get();
     }
 
-    public int calculateSumOfLineItems(LineItem lineItem) {
-        return lineItem.getQuantity() * lineItem.getPrice().intValue();
+    public Long calculateSumOfLineItems(LineItem lineItem) {
+        return ((long) lineItem.getQuantity()) * lineItem.getPrice();
     }
 
 
-    public int calculateTotalCart(Cart cart) {
+    public Long calculateTotalCart(Cart cart) {
         List<LineItem> lineItems = cart.getLineItems();
-        int total = 0;
+        Long total = 0L;
         for (LineItem i : lineItems) {
             i.getLineItemSumPrice();
         }
