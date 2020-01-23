@@ -86,7 +86,8 @@ public class ServiceCheckoutApplication {
 	public SimpleMailMessage templateSimpleMessage() {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setText(
-				"This is the test email template for your email:\n%s\n");
+				"Dear %1$s,\n\nWe received from you the folllowing order:\n\n %2$s" );
+		message.setSubject("Thanks for your order!");
 		return message;
 	}
 
