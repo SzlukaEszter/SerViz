@@ -62,6 +62,11 @@ public class CheckoutService {
         String text = String.format(template.getText(), user.getUsername(), order.toString());
         String to = user.getEmail();
 
-        emailService.sendSimpleMessage("szluka.eszter@gmail.com", template.getSubject(), text);
+        emailService.sendSimpleMessage(user.getEmail(), template.getSubject(), text);
+    }
+
+    public void closeOrder(Long userId){
+        sendEmail(userId);
+
     }
 }

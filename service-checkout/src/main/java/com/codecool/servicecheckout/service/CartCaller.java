@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-
 @Service
 @Slf4j
 public class CartCaller {
@@ -32,11 +30,16 @@ public class CartCaller {
     public Cart getCart(Long userId) {
         Cart response =
                 restTemplate.getForObject(
-                        cartUrl + "/getCart/"+ userId,
+                        cartUrl + "/getCart/" + userId,
                         Cart.class);
         return response;
-
-
     }
 
+    public void emptyCart(Long userId) {
+        restTemplate.delete(cartUrl + "/emptyCart" + userId);
+    }
+
+
 }
+
+
