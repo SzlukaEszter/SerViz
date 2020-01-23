@@ -28,5 +28,12 @@ public class DbInit {
                 .email("bela@watermail.com")
                 .build();
         userRepository.save(user2);
+
+        final User user3 = User.builder()
+                .username("a")
+                .password("a")
+                .email("a@a")
+                .build();
+        userRepository.save(user3);
     }
 }

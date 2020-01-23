@@ -47,32 +47,35 @@ public class CartService {
         return actualCart.get();
     }
 
-    public Long calculateSumOfLineItems(LineItem lineItem) {
+    private Long calculateSumOfLineItem(LineItem lineItem) {
         return ((long) lineItem.getQuantity()) * lineItem.getPrice();
     }
 
-
-    public Long calculateTotalCart(Cart cart) {
-        List<LineItem> lineItems = cart.getLineItems();
-        Long total = 0L;
-        for (LineItem i : lineItems) {
-            i.getLineItemSumPrice();
-        }
-        return total;
+    private Long calculateCartSum(Cart cart) {
+        return cart.getLineItems().stream()
+                .mapToLong(LineItem::getLineItemSumPrice)
+                .sum();
     }
 
     @Transactional
     public void increaseQuantity(Long lineItemId) {
         LineItem lineItem = lineItemRepository.findById(lineItemId).get();
         lineItem.setQuantity(lineItem.getQuantity() + 1);
-        calculateSumOfLineItems(lineItem);
+        // Recalculate sums     // TODO extract
+        lineItem.setLineItemSumPrice(calculateSumOfLineItem(lineItem));
+        Cart cart = lineItem.getCart();
+        cart.setSum(calculateCartSum(cart));
     }
 
     @Transactional
     public void reduceQuantity(Long lineItemId) {
         LineItem lineItem = lineItemRepository.findById(lineItemId).get();
         lineItem.setQuantity(lineItem.getQuantity() - 1);
-        calculateSumOfLineItems(lineItem);
+        lineItem.setLineItemSumPrice(calculateSumOfLineItem(lineItem));
+        // Recalculate sums     // TODO extract
+        lineItem.setLineItemSumPrice(calculateSumOfLineItem(lineItem));
+        Cart cart = lineItem.getCart();
+        cart.setSum(calculateCartSum(cart));
         // check if quantity = 0 -> delete lineItem
         if (lineItem.getQuantity() == 0) {
             lineItemRepository.delete(lineItem);
