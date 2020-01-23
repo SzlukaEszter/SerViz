@@ -280,4 +280,37 @@ class CartServiceTest {
 
     }
 
+    @Test
+    void deleteLineItem() {
+        Cart cart1 = Cart.builder()
+                .userId(1L)
+                .build();
+        cart1 = cartRepository.save(cart1);
+
+        LineItem holyWater = LineItem.builder()
+                .name("HolyWater")
+                .quantity(1)
+                .price(20L)
+                .cart(cart1)
+                .build();
+        holyWater = lineItemRepository.save(holyWater);
+
+        LineItem rakoskereszturiCsapviz = LineItem.builder()
+                .name("Rákoskeresztúri rákvíz")
+                .quantity(2)
+                .price(30L)
+                .cart(cart1)
+                .build();
+        rakoskereszturiCsapviz = lineItemRepository.save(rakoskereszturiCsapviz);
+
+
+        cartService.deleteLineItem(rakoskereszturiCsapviz.getId());
+
+
+        Cart cart = cartService.getCart(cart1.getUserId());
+        assertThat(cart)
+                .matches(c -> c.getLineItems().size() == 1, "1 lineitem remains");
+
+    }
+
 }

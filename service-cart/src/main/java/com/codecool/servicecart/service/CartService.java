@@ -63,6 +63,7 @@ public class CartService {
         }
     }
 
+    @Transactional
     public void deleteLineItem(Long lineItemId) {
         LineItem lineItem = lineItemRepository.findLineItemById(lineItemId);
         lineItemRepository.delete(lineItem);
