@@ -20,7 +20,7 @@ public class Cart {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cart", orphanRemoval = true)
     @Builder.Default
     private List<LineItem> lineItems = new ArrayList<LineItem>();
 

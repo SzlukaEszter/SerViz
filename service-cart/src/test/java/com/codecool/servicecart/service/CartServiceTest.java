@@ -308,6 +308,7 @@ class CartServiceTest {
 
 
         Cart cart = cartService.getCart(cart1.getUserId());
+
         assertThat(cart)
                 .matches(c -> c.getLineItems().size() == 1, "1 lineitem remains");
 
