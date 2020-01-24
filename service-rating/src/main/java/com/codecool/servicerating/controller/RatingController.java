@@ -17,7 +17,7 @@ public class RatingController {
     RatingService ratingService;
 
     @GetMapping("/{water_id}")
-    public List<Rating> getAllRatingsForWater(@PathVariable(value="water_id") Long waterId) {
+    public Rating getAllRatingsForWater(@PathVariable(value="water_id") Long waterId) {
         return ratingService.getRatingForWater(waterId);
     }
 
