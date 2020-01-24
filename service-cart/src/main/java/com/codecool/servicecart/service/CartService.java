@@ -47,38 +47,23 @@ public class CartService {
         return actualCart.get();
     }
 
-    public int calculateSumOfLineItems(LineItem lineItem) {
-        return lineItem.getQuantity() * lineItem.getPrice().intValue();
-    }
-
-
-    public int calculateTotalCart(Cart cart) {
-        List<LineItem> lineItems = cart.getLineItems();
-        int total = 0;
-        for (LineItem i : lineItems) {
-            i.getLineItemSumPrice();
-        }
-        return total;
-    }
-
     @Transactional
     public void increaseQuantity(Long lineItemId) {
         LineItem lineItem = lineItemRepository.findById(lineItemId).get();
         lineItem.setQuantity(lineItem.getQuantity() + 1);
-        calculateSumOfLineItems(lineItem);
     }
 
     @Transactional
     public void reduceQuantity(Long lineItemId) {
         LineItem lineItem = lineItemRepository.findById(lineItemId).get();
         lineItem.setQuantity(lineItem.getQuantity() - 1);
-        calculateSumOfLineItems(lineItem);
         // check if quantity = 0 -> delete lineItem
-        if (lineItem.getQuantity() == 0) {
-            lineItemRepository.delete(lineItem);
+        if (lineItem.getQuantity() <= 0) {
+            deleteLineItem(lineItem.getId());
         }
     }
 
+    @Transactional
     public void deleteLineItem(Long lineItemId) {
         LineItem lineItem = lineItemRepository.findLineItemById(lineItemId);
         lineItemRepository.delete(lineItem);

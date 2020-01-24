@@ -5,6 +5,7 @@ import com.codecool.servicecart.model.LineItem;
 import com.codecool.servicecart.repository.CartRepository;
 import com.codecool.servicecart.repository.LineItemRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,42 +41,35 @@ class CartServiceTest {
     void getAllLineItemByUserId() {
         Cart cart1 = Cart.builder()
                 .userId(1L)
-                .lineItems(new ArrayList<LineItem>())
-                .sum(new BigDecimal(0))
                 .build();
         cart1 = cartRepository.save(cart1);
 
         Cart cart2 = Cart.builder()
                 .userId(2L)
-                .lineItems(new ArrayList<LineItem>())
-                .sum(new BigDecimal(0))
                 .build();
         cart2 = cartRepository.save(cart2);
 
         LineItem holyWater = LineItem.builder()
                 .name("HolyWater")
                 .quantity(1)
-                .price(new BigDecimal(20))
+                .price(20L)
                 .cart(cart1)
-                .lineItemSumPrice(new BigDecimal(20))
                 .build();
         lineItemRepository.save(holyWater);
 
         LineItem rakoskereszturiCsapviz = LineItem.builder()
                 .name("Rákoskeresztúri rákvíz")
                 .quantity(2)
-                .price(new BigDecimal(10))
+                .price(10L)
                 .cart(cart1)
-                .lineItemSumPrice(new BigDecimal(20))
                 .build();
         lineItemRepository.save(rakoskereszturiCsapviz);
 
         LineItem jana = LineItem.builder()
                 .name("Jana baby")
                 .quantity(3)
-                .price(new BigDecimal(20))
+                .price(20L)
                 .cart(cart2)
-                .lineItemSumPrice(new BigDecimal(60))
                 .build();
         lineItemRepository.save(jana);
 
@@ -89,42 +83,35 @@ class CartServiceTest {
     void deleteAllFromCart() {
         Cart cart1 = Cart.builder()
                 .userId(1L)
-                .lineItems(new ArrayList<LineItem>())
-                .sum(new BigDecimal(0))
                 .build();
         cart1 = cartRepository.save(cart1);
 
         Cart cart2 = Cart.builder()
                 .userId(2L)
-                .lineItems(new ArrayList<LineItem>())
-                .sum(new BigDecimal(0))
                 .build();
         cart2 = cartRepository.save(cart2);
 
         LineItem holyWater = LineItem.builder()
                 .name("HolyWater")
                 .quantity(1)
-                .price(new BigDecimal(20))
+                .price(20L)
                 .cart(cart1)
-                .lineItemSumPrice(new BigDecimal(20))
                 .build();
         lineItemRepository.save(holyWater);
 
         LineItem rakoskereszturiCsapviz = LineItem.builder()
                 .name("Rákoskeresztúri rákvíz")
                 .quantity(2)
-                .price(new BigDecimal(10))
+                .price(10L)
                 .cart(cart1)
-                .lineItemSumPrice(new BigDecimal(20))
                 .build();
         lineItemRepository.save(rakoskereszturiCsapviz);
 
         LineItem jana = LineItem.builder()
                 .name("Jana baby")
                 .quantity(3)
-                .price(new BigDecimal(20))
+                .price(20L)
                 .cart(cart2)
-                .lineItemSumPrice(new BigDecimal(60))
                 .build();
         lineItemRepository.save(jana);
 
@@ -141,8 +128,189 @@ class CartServiceTest {
 
         final Cart cart = cartService.getCart(3L);
 
-        assertThat(cart).isNotNull();
+        assertThat(cart)
+                .isNotNull()
+                .matches(c -> c.getSum() == 0L);
     }
 
+    @Test
+    void getCart() {
+        Cart cart1 = Cart.builder()
+                .userId(1L)
+                .build();
+        cart1 = cartRepository.save(cart1);
+
+        Cart cart2 = Cart.builder()
+                .userId(2L)
+                .build();
+        cart2 = cartRepository.save(cart2);
+
+        LineItem holyWater = LineItem.builder()
+                .name("HolyWater")
+                .quantity(1)
+                .price(20L)
+                .cart(cart1)
+                .build();
+        lineItemRepository.save(holyWater);
+
+        LineItem rakoskereszturiCsapviz = LineItem.builder()
+                .name("Rákoskeresztúri rákvíz")
+                .quantity(2)
+                .price(10L)
+                .cart(cart1)
+                .build();
+        lineItemRepository.save(rakoskereszturiCsapviz);
+
+        LineItem jana = LineItem.builder()
+                .name("Jana baby")
+                .quantity(3)
+                .price(20L)
+                .cart(cart2)
+                .build();
+        lineItemRepository.save(jana);
+
+        final Cart cart = cartService.getCart(1L);
+
+        assertThat(cart)
+                .isNotNull()
+                .matches(c -> c.getUserId() == 1L, "userid is 1")
+                .matches(c -> c.getLineItems().size() == 2, "2 lineitems")
+                .matches(c -> c.getSum() == 40L, "sum is 40");
+
+
+    }
+
+    @Test
+    void increaseQuantity() {
+        Cart cart1 = Cart.builder()
+                .userId(1L)
+                .build();
+        cart1 = cartRepository.save(cart1);
+
+        LineItem holyWater = LineItem.builder()
+                .name("HolyWater")
+                .quantity(1)
+                .price(20L)
+                .cart(cart1)
+                .build();
+        holyWater = lineItemRepository.save(holyWater);
+
+        LineItem rakoskereszturiCsapviz = LineItem.builder()
+                .name("Rákoskeresztúri rákvíz")
+                .quantity(2)
+                .price(30L)
+                .cart(cart1)
+                .build();
+        lineItemRepository.save(rakoskereszturiCsapviz);
+
+
+        cartService.increaseQuantity(holyWater.getId());
+
+
+        Cart cart = cartService.getCart(cart1.getUserId());
+        assertThat(cart).matches(c -> c.getSum() == 100L, "sum is 100");
+
+    }
+
+    @Test
+    void reduceQuantityTo0_lineitemDisappears() {
+        Cart cart1 = Cart.builder()
+                .userId(1L)
+                .build();
+        cart1 = cartRepository.save(cart1);
+
+        LineItem holyWater = LineItem.builder()
+                .name("HolyWater")
+                .quantity(1)
+                .price(20L)
+                .cart(cart1)
+                .build();
+        holyWater = lineItemRepository.save(holyWater);
+
+        LineItem rakoskereszturiCsapviz = LineItem.builder()
+                .name("Rákoskeresztúri rákvíz")
+                .quantity(2)
+                .price(30L)
+                .cart(cart1)
+                .build();
+        lineItemRepository.save(rakoskereszturiCsapviz);
+
+
+        cartService.reduceQuantity(holyWater.getId());
+
+
+        Cart cart = cartService.getCart(cart1.getUserId());
+        assertThat(cart)
+                .matches(c -> c.getLineItems().size() == 1, "1 lineitem remains")
+                .matches(c -> c.getSum() == 60L, "sum is 100");
+
+    }
+
+    @Test
+    void reduceQuantity_lineitemDecreases() {
+        Cart cart1 = Cart.builder()
+                .userId(1L)
+                .build();
+        cart1 = cartRepository.save(cart1);
+
+        LineItem holyWater = LineItem.builder()
+                .name("HolyWater")
+                .quantity(1)
+                .price(20L)
+                .cart(cart1)
+                .build();
+        holyWater = lineItemRepository.save(holyWater);
+
+        LineItem rakoskereszturiCsapviz = LineItem.builder()
+                .name("Rákoskeresztúri rákvíz")
+                .quantity(2)
+                .price(30L)
+                .cart(cart1)
+                .build();
+        rakoskereszturiCsapviz = lineItemRepository.save(rakoskereszturiCsapviz);
+
+
+        cartService.reduceQuantity(rakoskereszturiCsapviz.getId());
+
+
+        Cart cart = cartService.getCart(cart1.getUserId());
+        assertThat(cart)
+                .matches(c -> c.getLineItems().size() == 2, "2 lineitem remains")
+                .matches(c -> c.getSum() == 50L, "sum is 50");
+
+    }
+
+    @Test
+    void deleteLineItem() {
+        Cart cart1 = Cart.builder()
+                .userId(1L)
+                .build();
+        cart1 = cartRepository.save(cart1);
+
+        LineItem holyWater = LineItem.builder()
+                .name("HolyWater")
+                .quantity(1)
+                .price(20L)
+                .cart(cart1)
+                .build();
+        holyWater = lineItemRepository.save(holyWater);
+
+        LineItem rakoskereszturiCsapviz = LineItem.builder()
+                .name("Rákoskeresztúri rákvíz")
+                .quantity(2)
+                .price(30L)
+                .cart(cart1)
+                .build();
+        rakoskereszturiCsapviz = lineItemRepository.save(rakoskereszturiCsapviz);
+
+
+        cartService.deleteLineItem(rakoskereszturiCsapviz.getId());
+
+
+        Cart cart = cartService.getCart(cart1.getUserId());
+        assertThat(cart)
+                .matches(c -> c.getLineItems().size() == 1, "1 lineitem remains");
+
+    }
 
 }

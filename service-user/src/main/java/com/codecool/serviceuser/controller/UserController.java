@@ -31,12 +31,12 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/byname")
-    public User getUserBy(@RequestParam("username") String username) {
+    @GetMapping("/byname/{username}")
+    public User getUserBy(@PathVariable("username") String username) {
         return userService.getUserByUsername(username);
     }
 
-    @PostMapping("/")
+    @PostMapping("/registration")
     @ApiOperation("Update or create a user")
     public void saveUser(@RequestBody User user) {
         userService.saveUser(user);

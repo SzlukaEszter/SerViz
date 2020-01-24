@@ -28,14 +28,14 @@ class UserServiceTest {
     @Test
     void getAllUsers() {
         final User user1 = User.builder()
-                .username("Water Sommelier of the Year")
+                .username("WaterSommelierOfTheYear")
                 .email("boss@watermail.com")
                 .password("aaa")
                 .build();
         userService.saveUser(user1);
 
         final User user2 = User.builder()
-                .username("Kovács Béla")
+                .username("kovacsbela")
                 .email("bela@watermail.com")
                 .password("bbb")
                 .build();
@@ -49,7 +49,7 @@ class UserServiceTest {
     @Test
     void getUserById() {
         final User user1 = User.builder()
-                .username("Water Sommelier of the Year")
+                .username("WaterSommelierOfTheYear")
                 .email("boss@watermail.com")
                 .password("aaa")
                 .build();
@@ -64,20 +64,20 @@ class UserServiceTest {
     @Test
     void getUserByName() {
         final User user1 = User.builder()
-                .username("Water Sommelier of the Year")
+                .username("WaterSommelierOfTheYear")
                 .email("boss@watermail.com")
                 .password("aaa")
                 .build();
         userService.saveUser(user1);
 
         final User user2 = User.builder()
-                .username("Kovács Béla")
+                .username("Kb")
                 .email("bela@watermail.com")
                 .password("bbb")
                 .build();
         userService.saveUser(user2);
 
-        User user = userService.getUserByUsername("Kovács Béla");
+        User user = userService.getUserByUsername("Kb");
 
         assertThat(user)
                 .matches(u -> u.getEmail().contentEquals("bela@watermail.com"));

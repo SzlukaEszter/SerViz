@@ -20,36 +20,17 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @Autowired
-    private UserIdentifierService userIdentifierService;
 
-    @GetMapping("/lineItems")
-    @ApiOperation("Get all lineItems in cart for authenticated user (only from frontend, with valid token in cookie)")
-    public List<LineItem> getAllLineItemInCart() {
-        Long userId = userIdentifierService.getUserId();
+    @GetMapping("/lineItems/{userId}")
+    @ApiOperation("Get all lineItems in cart by userId")
+    public List<LineItem> getAllLineItemInCart(@PathVariable Long userId) {
         return cartService.getAllLineItemByUserId(userId);
     }
-
 
     @GetMapping("/getCart/{userId}")
     @ApiOperation("Get cart by userId")
     public Cart getCart(@PathVariable Long userId) {
         return cartService.getCart(userId);
-    }
-
-    @GetMapping("/getCart")
-    @ApiOperation("Get cart for authenticated user (only from frontend, with valid token in cookie)")
-    public Cart getCart() {
-        Long userId = userIdentifierService.getUserId();
-        return cartService.getCart(userId);
-    }
-
-
-    @PostMapping("/add/{waterId}")
-    @ApiOperation("Add water to cart for authenticated user (only from frontend, with valid token in cookie)")
-    public void addToCart(@PathVariable("waterId") Long waterId) {
-        Long userId = userIdentifierService.getUserId();
-        cartService.addToCart(waterId, userId);
     }
 
     @PostMapping("/add/{waterId}/{userId}")
@@ -58,26 +39,10 @@ public class CartController {
         cartService.addToCart(waterId, userId);
     }
 
-
-    @DeleteMapping("/emptyCart")
-    @ApiOperation("Remove all lineItems from cart for authenticated user (only from frontend, with valid token in cookie)")
-    public void emptyCart() {
-        Long userId = userIdentifierService.getUserId();
-        cartService.deleteAllLineItemFromCart(userId);
-    }
-
     @DeleteMapping("/emptyCart/{userId}")
-    @ApiOperation("Remove all lineItems from cart by userId")
+    @ApiOperation("Remove all lineItems from cart by userId -- NOT WORKING VERSION")
     public void emptyCart(@PathVariable Long userId) {
         cartService.deleteAllLineItemFromCart(userId);
-    }
-
-
-    @PostMapping("/")
-    @ApiOperation("Create new cart for authenticated user (only from frontend, with valid token in cookie)")
-    public void createNewCart() {
-        Long userId = userIdentifierService.getUserId();
-        cartService.createCart(userId);
     }
 
     @PostMapping("/{userId}")
