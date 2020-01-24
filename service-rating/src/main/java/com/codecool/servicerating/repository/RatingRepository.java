@@ -12,6 +12,8 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     Rating findAllByWaterId(Long waterId);
 
+    List<Rating> findAllByUserId(Long userId);
+
     /*
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Rating r SET r.comment = :comment WHERE r.id = :ratingId")

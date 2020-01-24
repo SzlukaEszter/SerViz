@@ -48,12 +48,14 @@ public class ServiceRatingApplication {
                     .comment("lol funny taste")
                     .rating(5)
                     .waterId((long) 1)
+                    .userId((long) 1)
                     .build();
 
             Rating rating2  = Rating.builder()
                     .comment("weird taste, yellow color")
                     .rating(4)
                     .waterId((long) 2)
+                    .userId((long) 1)
                     .build();
 
             Rating rating3  = Rating.builder()

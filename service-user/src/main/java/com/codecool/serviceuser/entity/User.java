@@ -1,4 +1,4 @@
-package com.codecool.servicerating.entity;
+package com.codecool.serviceuser.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,18 +14,15 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Rating {
-
+public class User {
     @Id
     @GeneratedValue
     private Long id;
 
-    private String comment;
+    private String username;
 
-    private Integer rating;
+    private String password;
 
-    private Long waterId;
-
-    private Long userId;
+    private String email;
 
 }
