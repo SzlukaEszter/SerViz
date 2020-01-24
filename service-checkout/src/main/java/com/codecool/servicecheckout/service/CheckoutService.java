@@ -9,7 +9,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -21,16 +20,11 @@ public class CheckoutService {
     @Autowired
     CartCaller cartCaller;
 
-    @Autowired
-    SimpleMailMessage template;
-
-    @Autowired
-    EmailService emailService;
 
     @Autowired
     UserCaller userCaller;
 
-    public Order getOrder(Long userId){
+    public Order getOrder(Long userId) {
 
         return Order.builder()
                 .deliveryAddress(deliveryAddressRepository.findDeliveryAddressByUserIdAndActive(userId, true))
@@ -41,7 +35,7 @@ public class CheckoutService {
 
     }
 
-    public List<DeliveryAddress> getAddressesOfUser(Long userId){
+    public List<DeliveryAddress> getAddressesOfUser(Long userId) {
         return deliveryAddressRepository.findAllByUserId(userId);
     }
 
@@ -55,17 +49,27 @@ public class CheckoutService {
         deliveryAddressRepository.setAddressActive(id);
     }
 
+    @Autowired
+    SimpleMailMessage template;
+
+    @Autowired
+    EmailService emailService;
 
     public void sendEmail(Long userId) {
         Order order = getOrder(userId);
         User user = userCaller.getUser(userId);
-        String text = String.format(template.getText(), user.getUsername(), order.toString());
-        String to = user.getEmail();
+        String text = String.format(
+                template.getText(),
+                user.getUsername(),
+                order.toString());
 
-        emailService.sendSimpleMessage(user.getEmail(), template.getSubject(), text);
+        emailService.sendSimpleMessage(
+                user.getEmail(),
+                template.getSubject(),
+                text);
     }
 
-    public void closeOrder(Long userId){
+    public void closeOrder(Long userId) {
         sendEmail(userId);
 
     }
