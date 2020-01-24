@@ -59,13 +59,13 @@ public class ServiceRatingApplication {
                     .build();
 
             Rating rating3  = Rating.builder()
-                    .comment("it tastes like my granny, but still okay")
+                    .comment("it tastes like my river water, but still okay")
                     .rating(5)
                     .waterId((long) 3)
                     .build();
 
             Rating rating4  = Rating.builder()
-                    .comment("nothing better, than water that taste like old people")
+                    .comment("nothing better, than water that taste like water")
                     .rating(5)
                     .waterId((long) 3)
                     .build();

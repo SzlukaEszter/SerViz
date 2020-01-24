@@ -28,7 +28,7 @@ public class LineItemController {
     }
 
     @DeleteMapping("/{lineItemId}")
-    @ApiOperation("Delete lineItem by lineItemId -- NOT WORKING VERSION")
+    @ApiOperation("Delete lineItem by lineItemId")
     public void deleteItem(@PathVariable("lineItemId") Long id){
         cartService.deleteLineItem(id);
     }

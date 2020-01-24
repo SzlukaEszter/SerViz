@@ -41,7 +41,7 @@ public class CartController {
     }
 
     @DeleteMapping("/emptyCart/{userId}")
-    @ApiOperation("Remove all lineItems from cart by userId -- NOT WORKING VERSION")
+    @ApiOperation("Remove all lineItems from cart by userId")
     public void emptyCart(@PathVariable Long userId) {
         cartService.deleteAllLineItemFromCart(userId);
     }
