@@ -1,7 +1,7 @@
 package com.codecool.apigateway.controller;
 
 import com.codecool.apigateway.model.UserData;
-import com.codecool.apigateway.security.JwtTokenServices;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
